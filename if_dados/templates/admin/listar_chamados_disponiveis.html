@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamados Disponíveis</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Chamados Disponíveis</h1>
+
+    {% if chamados %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Departamento</th>
+                    <th>Sala</th>
+                    <th>Equipamento</th>
+                    <th>Descrição do Problema</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chamado in chamados %}
+                <tr>
+                    <td>{{ chamado.id }}</td>
+                    <td>{{ chamado.departamento }}</td>
+                    <td>{{ chamado.sala }}</td>
+                    <td>{{ chamado.equipamento.tipo_de_equipamento }}</td>
+                    <td>{{ chamado.descricao_problema }}</td>
+                    <td>
+                        <a href="{% url 'assumir_chamado' chamado.id %}" class="btn btn-primary">Assumir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum chamado disponível.</p>
+    {% endif %}
+</body>
+</html>
