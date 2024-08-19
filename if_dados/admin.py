@@ -38,9 +38,10 @@ class ChamadoAdmin(admin.ModelAdmin):
     search_fields = ('departamento', 'sala', 'descricao_problema', 'patrimonio')
     readonly_fields = ('data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura')
     fields = (
-        'departamento', 'sala', 'equipamento', 'descricao_problema', 'patrimonio', 'status', 'tecnico',
+        'departamento', 'sala', 'equipamento', 'descricao_problema', 'patrimonio', 'status',
         'data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'relato_tecnico'
     )
+    exclude = ('tecnico',)  # Remove o campo tecnico da exibição e edição
 
     def get_urls(self):
         urls = super().get_urls()

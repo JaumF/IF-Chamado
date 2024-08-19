@@ -14,6 +14,7 @@
   </div>
 
   {% if chamado.status == 'Aberto' %}
+    <h2>Fechar Chamado</h2>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
