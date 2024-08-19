@@ -123,3 +123,19 @@ def assumir_chamado(request, chamado_id):
     chamado.save()
     messages.success(request, f'Você agora é responsável pelo chamado {chamado.id}.')
     return redirect('detalhes_do_chamado', id=chamado.id)
+
+
+def abrir_chamado(request):
+    if request.method == 'POST':
+        form = ChamadoForm(request.POST)
+        if form.is_valid():
+            chamado = form.save(commit=False)
+            chamado.usuario = request.user
+            chamado.save()
+            return redirect('if_app:chamados')
+    else:
+        form = ChamadoForm()
+    return render(request, 'abrir-chamado.html', {'form': form})
+
+def Chamados(request):
+    return render(request, 'chamados.html')

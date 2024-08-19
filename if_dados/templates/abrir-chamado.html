@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>IF CHAMADOS - Abrir chamado</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7f423aaa39.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container-geral-abrir-chamado">
+        <div class="logo mb-4 text-white">IF CHAMADOS</div>
+        <div class="container">
+            <form method="post" action="{% url 'abrir_chamado' %}">
+                {% csrf_token %}
+                
+                <div class="text-white mt-4 texto-dropdown">Departamento</div>
+                <div class="form-group">
+                    <input type="text" name="departamento" id="id_departamento" class="input-equipamento sombra" placeholder="Ex: Localização." value="{{ form.departamento.value|default:'' }}">
+                </div>
+
+                <div class="text-white mt-4 texto-dropdown">Sala</div>
+                <div class="form-group">
+                    <input type="text" name="sala" id="id_sala" class="input-equipamento sombra" placeholder="Ex: Núm. da Sala." value="{{ form.sala.value|default:'' }}">
+                </div>
+
+                <div class="text-white mt-4 texto-dropdown">Equipamento</div>
+                <div class="form-group">
+                    <select name="equipamento" id="id_equipamento" class="estilo-dropdowns sombra text-center">
+                        {% for option in form.equipamento.field.choices %}
+                            <option value="{{ option.0 }}" {% if option.0 == form.equipamento.value %}selected{% endif %}>{{ option.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_descricao_problema" class="form-label text-white texto-dropdown caixa-comentario">Descr. do problema:</label>
+                    <textarea name="descricao_problema" id="id_descricao_problema" class="form-control area-comentario custom-placeholder sombra" rows="5" placeholder="Digite seu relato aqui...">{{ form.descricao_problema.value|default:'' }}</textarea>
+                </div>
+
+                <div class="text-white mt-4 texto-dropdown">Patrimônio</div>
+                <div class="form-group">
+                    <input type="text" name="patrimonio" id="id_patrimonio" class="input-equipamento sombra" placeholder="Ex: Núm. de fabricação" value="{{ form.patrimonio.value|default:'' }}">
+                </div>
+
+                <div class="container-botao-voltar">
+                    <div class="icone-voltar">
+                        <a href="{% url 'chamados' %}"><i class="fas fa-arrow-left text-white "></i></a>
+                        <input class="mt-4 text-white botao-voltar" type="button" value="Voltar" onclick="history.back()">
+                    </div>
+                </div>
+                <div class="container-botao-enviar">
+                    <input class="btn btn-light mt-4 mb text-center botao-enviar sombra" type="submit" value="Enviar">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

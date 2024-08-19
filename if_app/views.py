@@ -35,3 +35,6 @@ def logout_view(request):
 @login_required
 def chamados_view(request):
     return render(request, 'chamados.html')
+
+def abrir_chamado(request):
+    return render(request, 'abrir-chamado.html')

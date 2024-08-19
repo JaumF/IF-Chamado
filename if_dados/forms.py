@@ -4,19 +4,13 @@ from .models import Chamado, Especialidade
 class ChamadoForm(forms.ModelForm):
     class Meta:
         model = Chamado
-        fields = [
-            'departamento',
-            'sala',
-            'descricao_problema',
-            'patrimonio',
-            'equipamento',
-            'especialidade'
-        ]
+        fields = ['departamento', 'sala', 'descricao_problema', 'patrimonio', 'equipamento', 'especialidade']
         widgets = {
-            'data_abertura': forms.HiddenInput(),
-            'data_fechamento': forms.HiddenInput(),
-            'data_modificacao': forms.HiddenInput(),
-            'data_reabertura': forms.HiddenInput(),
+            'departamento': forms.TextInput(attrs={'class': 'input-equipamento sombra'}),
+            'sala': forms.TextInput(attrs={'class': 'input-equipamento sombra'}),
+            'descricao_problema': forms.Textarea(attrs={'class': 'form-control area-comentario custom-placeholder sombra'}),
+            'patrimonio': forms.TextInput(attrs={'class': 'input-equipamento sombra'}),
+            'equipamento': forms.Select(attrs={'class': 'estilo-dropdowns sombra text-center'}),
             'especialidade': forms.Select(attrs={'style': 'width: 300px;'}),
         }
 

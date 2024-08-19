@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -21,7 +20,7 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <form method="get" action="meus-chamados.html">
+                    <form method="get" action="#">
                         <div class="form-group input-icon-lista-ticket">
                             <i class="fa-solid fa-table-list"></i>
                             <input class="form-control mt-5 pt-3 pb-3 sombra opcao-meus-chamados" type="submit" name="meus-chamados" id="meus-chamados" value="Meus chamados">
@@ -29,7 +28,7 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form method="get" action="abrir-chamado.html">
+                    <form method="get" action="{% url 'abrir-chamado' %}">
                         <div class="form-group input-icon-lista-ticket">
                             <i class="fa-solid fa-ticket"></i>
                             <input class="form-control pt-3 pb-3 mt-5 sombra opcao-abrir-chamado" type="submit" value="Abrir chamado">
