@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <h1>Reabrir Chamado: {{ chamado.id }}</h1>
+  <div>
+    <strong>Departamento:</strong> {{ chamado.departamento }}<br>
+    <strong>Sala:</strong> {{ chamado.sala }}<br>
+    <strong>Equipamento:</strong> {{ chamado.equipamento.tipo_de_equipamento }}<br>
+    <strong>Descrição do Problema:</strong> {{ chamado.descricao_problema }}<br>
+    <strong>Patrimônio:</strong> {{ chamado.patrimonio }}<br>
+    <strong>Data de Abertura:</strong> {{ chamado.data_abertura }}<br>
+    <strong>Status:</strong> {{ chamado.get_status_display }}<br>
+    <strong>Técnico:</strong> {{ chamado.tecnico }}<br>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Reabrir Chamado</button>
+  </form>
+{% endblock %}

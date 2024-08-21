@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+  <!-- Detalhes do chamado -->
+  <h2>Histórico do Chamado</h2>
+  <ul>
+    {% for historico in chamado.historicos.all %}
+      <li>
+        <strong>Data de Fechamento:</strong> {{ historico.data_fechamento }}<br>
+        <strong>Status:</strong> {{ historico.status }}<br>
+        <strong>Relatório:</strong> {{ historico.relatorio }}<br>
+        <strong>Técnico:</strong> {{ historico.tecnico }}<br>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,11 +1,11 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
-  <h1>Fechar Chamado: {{ chamado.id }}</h1>
+  <h1>Detalhes do Chamado: {{ chamado.id }}</h1>
   <div>
     <strong>Departamento:</strong> {{ chamado.departamento }}<br>
     <strong>Sala:</strong> {{ chamado.sala }}<br>
-    <strong>Equipamento:</strong> {{ chamado.equipamento.tipo_de_equipamento }}<br>
+    <strong>Equipamento:</strong> {{ chamado.equipamento }}<br>
     <strong>Descrição do Problema:</strong> {{ chamado.descricao_problema }}<br>
     <strong>Patrimônio:</strong> {{ chamado.patrimonio }}<br>
     <strong>Data de Abertura:</strong> {{ chamado.data_abertura }}<br>
@@ -13,14 +13,15 @@
     <strong>Técnico:</strong> {{ chamado.tecnico }}<br>
   </div>
 
-  {% if chamado.status == 'Aberto' %}
-    <h2>Fechar Chamado</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Fechar Chamado</button>
-    </form>
-  {% else %}
-    <p>Este chamado já está fechado.</p>
-  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if chamado.status == 'Fechado' %}
+      <button type="submit" formaction="{% url 'admin:fechar_chamado' chamado.id %}">Fechar Chamado</button>
+    {% elif chamado.status == 'Reaberto' %}
+      <button type="submit" formaction="{% url 'admin:fechar_chamado' chamado.id %}">Fechar Chamado</button>
+    {% else %}
+      <button type="submit">Atualizar Chamado</button>
+    {% endif %}
+  </form>
 {% endblock %}

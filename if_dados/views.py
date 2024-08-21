@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Chamado, Tecnico
+from .models import Chamado, HistoricoChamado, Tecnico
 from .forms import ChamadoForm, ChamadoAlterarForm, FecharChamadoForm
 
+@login_required
 def abrir_chamado(request):
     if request.method == 'POST':
         form = ChamadoForm(request.POST)
@@ -17,6 +19,7 @@ def abrir_chamado(request):
         form = ChamadoForm()
     return render(request, 'abrir_chamado.html', {'form': form})
 
+@login_required
 def chamado_enviado(request, chamado_id):
     chamado = get_object_or_404(Chamado, id=chamado_id)
     return render(request, 'chamado_enviado.html', {'chamado': chamado})
@@ -26,7 +29,6 @@ def detalhes_do_chamado(request, id):
     chamado = get_object_or_404(Chamado, id=id)
     tecnico = get_object_or_404(Tecnico, user=request.user)
 
-    # Verifique se o técnico é responsável pelo chamado ou se o chamado é do técnico
     if chamado.tecnico and chamado.tecnico != tecnico:
         messages.error(request, 'Você não tem permissão para visualizar este chamado.')
         return redirect('listar_chamados_disponiveis')
@@ -35,6 +37,7 @@ def detalhes_do_chamado(request, id):
         form = ChamadoAlterarForm(request.POST, instance=chamado)
         if form.is_valid():
             chamado = form.save(commit=False)
+            chamado.data_modificacao = timezone.now()
             if chamado.status == Chamado.Status.FECHADO:
                 chamado.marcar_como_concluido()
             chamado.save()
@@ -45,6 +48,7 @@ def detalhes_do_chamado(request, id):
     context = {
         'form': form,
         'chamado': chamado,
+        'mostrar_botao_reabrir': chamado.status == Chamado.Status.FECHADO,
     }
     return render(request, 'detalhes_do_chamado.html', context)
 
@@ -69,43 +73,55 @@ def fechar_chamado_view(request, chamado_id):
     chamado = get_object_or_404(Chamado, id=chamado_id)
     tecnico = get_object_or_404(Tecnico, user=request.user)
 
-    # Verifique se o técnico pode fechar o chamado
     if chamado.tecnico != tecnico:
         messages.error(request, 'Você não tem permissão para fechar este chamado.')
         return redirect('detalhes_do_chamado', id=chamado_id)
 
     if request.method == 'POST':
-        form = FecharChamadoForm(request.POST, instance=chamado)
+        form = FecharChamadoForm(request.POST)
         if form.is_valid():
-            chamado = form.save(commit=False)
             chamado.status = Chamado.Status.FECHADO
             chamado.data_fechamento = timezone.now()
-            chamado.tecnico = tecnico  # Atribua o técnico ao chamado
+            chamado.relato_tecnico = form.cleaned_data['relato_tecnico']
             chamado.save()
+
+            HistoricoChamado.objects.create(
+                chamado=chamado,
+                data_fechamento=chamado.data_fechamento,
+                status=Chamado.Status.FECHADO,
+                relatorio=chamado.relato_tecnico,
+                tecnico=tecnico
+            )
+
             messages.success(request, 'Chamado fechado com sucesso!')
-            return redirect('admin:integrador_chamado_changelist')
+            return redirect('detalhes_do_chamado', id=chamado_id)
     else:
-        form = FecharChamadoForm(instance=chamado)
+        form = FecharChamadoForm()
 
     context = {
         'form': form,
         'chamado': chamado,
-        'opts': Chamado._meta,
-        'change': True,
-        'is_popup': False,
-        'save_as': False,
-        'save_on_top': False,
-        'has_delete_permission': request.user.has_perm('integrador.delete_chamado'),
-        'has_change_permission': request.user.has_perm('integrador.change_chamado'),
     }
-    return render(request, 'admin/fechar_chamado.html', context)
-
+    return render(request, 'fechar_chamado.html', context)
 
 @login_required
 def listar_chamados_disponiveis(request):
     tecnico = get_object_or_404(Tecnico, user=request.user)
-    especialidades = tecnico.especialidade.all()
-    chamados = Chamado.objects.filter(equipamento__especialidade__in=especialidades, tecnico__isnull=True)
+    especialidades = tecnico.especialidades.all()
+    
+    status_filtro = request.GET.get('status')
+    if status_filtro:
+        chamados = Chamado.objects.filter(
+            status=status_filtro,
+            equipamento__especialidades_requeridas__in=especialidades,
+            tecnico__isnull=True
+        )
+    else:
+        chamados = Chamado.objects.filter(
+            equipamento__especialidades_requeridas__in=especialidades,
+            tecnico__isnull=True
+        )
+    
     return render(request, 'listar_chamados_disponiveis.html', {'chamados': chamados, 'tecnico': tecnico})
 
 @login_required
@@ -113,18 +129,53 @@ def assumir_chamado(request, chamado_id):
     tecnico = get_object_or_404(Tecnico, user=request.user)
     chamado = get_object_or_404(Chamado, id=chamado_id)
 
-    # Verifique se o chamado corresponde a uma das especialidades do técnico
-    if chamado.equipamento.especialidade not in tecnico.especialidade.all():
+    if not set(chamado.equipamento.especialidades_requeridas.all()).intersection(tecnico.especialidades.all()):
         messages.error(request, 'Você não tem a especialidade necessária para este chamado.')
         return redirect('listar_chamados_disponiveis')
 
-    # Associe o técnico ao chamado
     chamado.tecnico = tecnico
     chamado.save()
     messages.success(request, f'Você agora é responsável pelo chamado {chamado.id}.')
     return redirect('detalhes_do_chamado', id=chamado.id)
 
+@login_required
+def reabrir_chamado(request, chamado_id):
+    chamado = get_object_or_404(Chamado, id=chamado_id)
+    tecnico = get_object_or_404(Tecnico, user=request.user)
 
+    if chamado.tecnico != tecnico:
+        messages.error(request, 'Você não tem permissão para reabrir este chamado.')
+        return redirect('detalhes_do_chamado', id=chamado_id)
+
+    if request.method == 'POST':
+        form = FecharChamadoForm(request.POST)
+        if form.is_valid():
+            chamado.status = Chamado.Status.REABERTO
+            chamado.data_reabertura = timezone.now()
+            chamado.relato_tecnico = form.cleaned_data['relato_tecnico']
+            chamado.save()
+
+            HistoricoChamado.objects.create(
+                chamado=chamado,
+                data_fechamento=chamado.data_reabertura,
+                status=Chamado.Status.REABERTO,
+                relatorio=chamado.relato_tecnico,
+                tecnico=tecnico
+            )
+
+            messages.success(request, 'Chamado reaberto com sucesso!')
+            return redirect('detalhes_do_chamado', id=chamado_id)
+    else:
+        form = FecharChamadoForm()
+
+    context = {
+        'form': form,
+        'chamado': chamado,
+    }
+    return render(request, 'reabrir_chamado.html', context)
+
+
+@login_required
 def abrir_chamado(request):
     if request.method == 'POST':
         form = ChamadoForm(request.POST)
@@ -132,10 +183,35 @@ def abrir_chamado(request):
             chamado = form.save(commit=False)
             chamado.usuario = request.user
             chamado.save()
-            return redirect('if_app:chamados')
+            return redirect('chamado_enviado', chamado_id=chamado.id)
     else:
         form = ChamadoForm()
-    return render(request, 'abrir-chamado.html', {'form': form})
+    return render(request, 'abrir_chamado.html', {'form': form})
 
-def Chamados(request):
-    return render(request, 'chamados.html')
+@login_required
+def chamado_enviado(request, chamado_id):
+    chamado = get_object_or_404(Chamado, id=chamado_id)
+    return render(request, 'chamado_enviado.html', {'chamado': chamado})
+
+def submit_chamado(request):
+    if request.method == "POST":
+        departamento = request.POST.get('departamento')
+        sala = request.POST.get('sala')
+        equipamento = request.POST.get('equipamento')
+        descricao_problema = request.POST.get('descricao_problema')
+        patrimonio = request.POST.get('patrimonio')
+
+        # Crie uma nova instância do modelo Chamado
+        chamado = Chamado(
+            departamento=departamento,
+            sala=sala,
+            equipamento=equipamento,  # Utilize o novo campo
+            descricao_problema=descricao_problema,
+            patrimonio=patrimonio,
+            data_abertura=timezone.now()
+        )
+        chamado.save()
+
+        return redirect('chamados')  # Redirecionar para uma página após o envio
+
+    return HttpResponse("Método não permitido", status=405)

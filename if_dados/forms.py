@@ -1,18 +1,25 @@
 from django import forms
+from django_select2.forms import Select2MultipleWidget, Select2Widget
 from .models import Chamado, Especialidade
 
 class ChamadoForm(forms.ModelForm):
     class Meta:
         model = Chamado
-        fields = ['departamento', 'sala', 'descricao_problema', 'patrimonio', 'equipamento', 'especialidade']
+        fields = ['status', 'usuario', 'departamento', 'sala', 'descricao_problema', 'patrimonio', 'data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'especialidade', 'relato_tecnico']
         widgets = {
-            'departamento': forms.TextInput(attrs={'class': 'input-equipamento sombra'}),
-            'sala': forms.TextInput(attrs={'class': 'input-equipamento sombra'}),
-            'descricao_problema': forms.Textarea(attrs={'class': 'form-control area-comentario custom-placeholder sombra'}),
-            'patrimonio': forms.TextInput(attrs={'class': 'input-equipamento sombra'}),
-            'equipamento': forms.Select(attrs={'class': 'estilo-dropdowns sombra text-center'}),
-            'especialidade': forms.Select(attrs={'style': 'width: 300px;'}),
+            'descricao_problema': forms.Textarea(attrs={'rows': 5}),
+            'data_abertura': forms.DateInput(attrs={'type': 'date'}),
+            'data_fechamento': forms.DateInput(attrs={'type': 'date'}),
+            'data_modificacao': forms.DateInput(attrs={'type': 'date'}),
+            'data_reabertura': forms.DateInput(attrs={'type': 'date'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remova a linha referente ao queryset do equipamento
+        # self.fields['equipamento'].queryset = Equipamento.objects.all()
+        self.fields['especialidade'].widget = forms.CheckboxSelectMultiple()
+        self.fields['especialidade'].queryset = Especialidade.objects.all()
 
 class ChamadoAlterarForm(forms.ModelForm):
     class Meta:
@@ -20,56 +27,25 @@ class ChamadoAlterarForm(forms.ModelForm):
         fields = [
             'departamento', 
             'sala', 
-            'equipamento', 
             'descricao_problema', 
             'patrimonio', 
-            'relato_tecnico'
         ]
         widgets = {
-            'data_abertura': forms.HiddenInput(),  
+            'data_abertura': forms.HiddenInput(),
             'data_fechamento': forms.HiddenInput(),
             'data_modificacao': forms.HiddenInput(),
             'data_reabertura': forms.HiddenInput(),
-            'especialidade': forms.Select(attrs={'style': 'width: 2000%;'}),
+            'especialidade': Select2Widget(attrs={'style': 'width: 300px;'}),  # Ajuste a largura aqui
         }
 
-class FecharChamadoForm(forms.ModelForm):
-    class Meta:
-        model = Chamado
-        fields = ['relato_tecnico', 'tecnico']  # Adicione o campo tecnico
+class FecharChamadoForm(forms.Form):
+    relato_tecnico = forms.CharField(widget=forms.Textarea, required=True)
 
     def clean(self):
         cleaned_data = super().clean()
         relato_tecnico = cleaned_data.get("relato_tecnico")
-        tecnico = cleaned_data.get("tecnico")
 
         if not relato_tecnico:
             raise forms.ValidationError("O relatório técnico é obrigatório para fechar o chamado.")
-        
-        if not tecnico:
-            raise forms.ValidationError("O técnico é obrigatório para fechar o chamado.")
 
         return cleaned_data
-
-
-class PedidoReaberturaForm(forms.ModelForm):
-    class Meta:
-        model = Chamado
-        fields = ['descricao_problema']
-        widgets = {
-            'data_abertura': forms.HiddenInput(),  
-            'data_fechamento': forms.HiddenInput(),
-            'data_modificacao': forms.HiddenInput(),
-            'data_reabertura': forms.HiddenInput(),
-        }
-
-class RelatorioReaberturaForm(forms.ModelForm):
-    class Meta:
-        model = Chamado
-        fields = ['descricao_problema']
-        widgets = {
-            'data_abertura': forms.HiddenInput(),  
-            'data_fechamento': forms.HiddenInput(),
-            'data_modificacao': forms.HiddenInput(),
-            'data_reabertura': forms.HiddenInput(),
-        }
