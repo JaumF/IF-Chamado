@@ -5,7 +5,7 @@ from .models import Chamado, Especialidade
 class ChamadoForm(forms.ModelForm):
     class Meta:
         model = Chamado
-        fields = ['status', 'usuario', 'departamento', 'sala', 'descricao_problema', 'patrimonio', 'data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'especialidade', 'relato_tecnico']
+        fields = ['status', 'departamento', 'sala', 'descricao_problema', 'patrimonio', 'data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'especialidade', 'relato_tecnico']
         widgets = {
             'descricao_problema': forms.Textarea(attrs={'rows': 5}),
             'data_abertura': forms.DateInput(attrs={'type': 'date'}),
@@ -16,8 +16,6 @@ class ChamadoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Remova a linha referente ao queryset do equipamento
-        # self.fields['equipamento'].queryset = Equipamento.objects.all()
         self.fields['especialidade'].widget = forms.CheckboxSelectMultiple()
         self.fields['especialidade'].queryset = Especialidade.objects.all()
 

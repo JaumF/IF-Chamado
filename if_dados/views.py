@@ -193,8 +193,9 @@ def chamado_enviado(request, chamado_id):
     chamado = get_object_or_404(Chamado, id=chamado_id)
     return render(request, 'chamado_enviado.html', {'chamado': chamado})
 
+@login_required
 def submit_chamado(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         departamento = request.POST.get('departamento')
         sala = request.POST.get('sala')
         equipamento = request.POST.get('equipamento')
@@ -205,13 +206,14 @@ def submit_chamado(request):
         chamado = Chamado(
             departamento=departamento,
             sala=sala,
-            equipamento=equipamento,  # Utilize o novo campo
+            equipamento=equipamento,
             descricao_problema=descricao_problema,
             patrimonio=patrimonio,
-            data_abertura=timezone.now()
+            data_abertura=timezone.now(),
+            usuario=request.user  # Atribui o usuário logado no site
         )
         chamado.save()
 
-        return redirect('chamados')  # Redirecionar para uma página após o envio
+        return redirect('chamados')  # Redirecionar para a página de listagem de chamados
 
     return HttpResponse("Método não permitido", status=405)

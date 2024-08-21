@@ -31,8 +31,8 @@ class Chamado(models.Model):
         PENDENTE = 'Pendente', 'Pendente'
         REABERTO = 'Reaberto', 'Reaberto'
 
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.ABERTO)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    status = models.CharField(max_length=10, choices=Status.choices, default=Status.ABERTO)
     departamento = models.CharField(max_length=255)
     sala = models.CharField(max_length=255)
     descricao_problema = models.TextField()
@@ -42,7 +42,7 @@ class Chamado(models.Model):
     data_modificacao = models.DateField(blank=True, null=True)
     data_reabertura = models.DateField(blank=True, null=True)
     equipamento = models.CharField(max_length=255, blank=True, null=True)  # Novo campo
-    especialidade = models.ManyToManyField(Especialidade, blank=True)
+    especialidade = models.ManyToManyField('Especialidade', blank=True)
     relato_tecnico = models.TextField(blank=True)
 
     def marcar_como_concluido(self):
@@ -51,7 +51,8 @@ class Chamado(models.Model):
         self.save()
 
     def __str__(self):
-        return f"Chamado {self.id} - {self.departamento}"
+        user_email = getattr(self.usuario, 'email', 'Email desconhecido')
+        return f"Chamado {self.id} - {self.departamento} - {user_email}"
 
 # Define the HistoricoChamado model
 class HistoricoChamado(models.Model):

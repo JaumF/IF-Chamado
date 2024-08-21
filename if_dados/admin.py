@@ -20,16 +20,20 @@ class TecnicoAdmin(admin.ModelAdmin):
 @admin.register(Chamado)
 class ChamadoAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'departamento', 'sala', 'descricao_problema', 'patrimonio', 'data_abertura', 'status', 'action_buttons'
+        'id', 'departamento', 'sala', 'descricao_problema', 'patrimonio', 'data_abertura', 'status', 'usuario_email', 'action_buttons'
     )
     list_filter = ('status', 'departamento', 'especialidade')
-    search_fields = ('departamento', 'sala', 'descricao_problema', 'patrimonio')
+    search_fields = ('departamento', 'sala', 'descricao_problema', 'patrimonio', 'usuario__email')
     readonly_fields = ('data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'especialidade')
     fields = (
         'departamento', 'sala', 'descricao_problema', 'patrimonio', 'status',
-        'data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'especialidade', 'relato_tecnico'
+        'data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'especialidade', 'relato_tecnico', 'usuario'
     )
-    form = ChamadoForm  # Use the custom form
+    form = ChamadoForm 
+
+    def usuario_email(self, obj):
+        return obj.usuario.email
+    usuario_email.short_description = 'Email do Usuário'
 
     def get_urls(self):
         urls = super().get_urls()
@@ -133,3 +137,15 @@ class ChamadoAdmin(admin.ModelAdmin):
             reverse('admin:fechar_chamado', args=[obj.id])
         )
     action_buttons.short_description = 'Ações'
+
+
+@admin.register(Especialidade)
+class EspecialidadeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nome')
+    search_fields = ('nome',)
+
+@admin.register(HistoricoChamado)
+class HistoricoChamadoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'chamado', 'data_fechamento', 'status', 'tecnico')
+    list_filter = ('status', 'data_fechamento', 'tecnico')
+    search_fields = ('chamado__id', 'tecnico__nome', 'status')
