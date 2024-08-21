@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from .models import Chamado, HistoricoChamado, Tecnico
 from .forms import ChamadoForm, ChamadoAlterarForm, FecharChamadoForm
@@ -106,23 +106,29 @@ def fechar_chamado_view(request, chamado_id):
 
 @login_required
 def listar_chamados_disponiveis(request):
-    tecnico = get_object_or_404(Tecnico, user=request.user)
+    try:
+        tecnico = get_object_or_404(Tecnico, user=request.user)
+    except Http404:
+        messages.error(request, 'Você não tem um técnico associado. Entre em contato com o administrador.')
+        return redirect('chamados')  # Redireciona para a URL nomeada 'chamados'
+
     especialidades = tecnico.especialidades.all()
     
     status_filtro = request.GET.get('status')
     if status_filtro:
         chamados = Chamado.objects.filter(
             status=status_filtro,
-            equipamento__especialidades_requeridas__in=especialidades,
+            especialidade__in=especialidades,
             tecnico__isnull=True
         )
     else:
         chamados = Chamado.objects.filter(
-            equipamento__especialidades_requeridas__in=especialidades,
+            especialidade__in=especialidades,
             tecnico__isnull=True
         )
     
     return render(request, 'listar_chamados_disponiveis.html', {'chamados': chamados, 'tecnico': tecnico})
+
 
 @login_required
 def assumir_chamado(request, chamado_id):
@@ -191,7 +197,8 @@ def abrir_chamado(request):
 @login_required
 def chamado_enviado(request, chamado_id):
     chamado = get_object_or_404(Chamado, id=chamado_id)
-    return render(request, 'chamado_enviado.html', {'chamado': chamado})
+    return render(request, 'chamado-enviado.html', {'chamado': chamado})
+
 
 @login_required
 def submit_chamado(request):
@@ -214,6 +221,7 @@ def submit_chamado(request):
         )
         chamado.save()
 
-        return redirect('chamados')  # Redirecionar para a página de listagem de chamados
+        # Redirecionar para a página 'chamado_enviado' com o ID do chamado
+        return redirect('chamado_enviado', chamado_id=chamado.id)
 
     return HttpResponse("Método não permitido", status=405)
