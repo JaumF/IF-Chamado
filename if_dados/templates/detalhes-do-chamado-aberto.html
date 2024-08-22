@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>IF CHAMADOS - Detalhes do chamado</title>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+    <!-- Google Material icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7f423aaa39.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="container-geral"> <!-- inicio container geral -->
+        <div class="logo text-white">IF CHAMADOS</div>
+
+        <h1 class="text-center text-white mt-5 mb-5">Detalhes do Chamado</h1>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-12 informacoes">
+                    <div class="setor">Departamento: {{ chamado.departamento }}</div>
+                    <div class="sala">Sala: {{ chamado.sala }}</div>
+                    <div class="equipamento">Equipamento: {{ chamado.equipamento }}</div>
+                    <div class="data-de-abertura">Data de abertura: {{ chamado.data_abertura|date:"d/m/Y" }}</div>
+                    <div class="status">Status: {{ chamado.status }}</div>               
+                    <div class="descricao">Descrição do problema: {{ chamado.descricao_problema }}</div>
+                    <div class="patrimonio">Patrimônio: {{ chamado.patrimonio }}</div>
+                    <div class="relato-tecnico">Relato Técnico: {{ chamado.relato_tecnico }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

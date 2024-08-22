@@ -22,55 +22,43 @@
     <script src="https://kit.fontawesome.com/7f423aaa39.js" crossorigin="anonymous"></script>
 
 </head>
-    <body>
-        <div class="container-geral"> <!-- inicio container geral -->
-            <div class="logo text-white">IF CHAMADOS</div>
+<body>
+    <div class="container-geral"> <!-- inicio container geral -->
+        <div class="logo text-white">IF CHAMADOS</div>
 
-            <div class="container">
-                <div class="row mt-5">
-                    <div class="col-4 justify-content-start text-center text-white config-barra-superior">
-                        <div>N°</div>
-                        <div class="numero-chamado">1</div>
-                        <div class="numero-chamado">2</div>
-                        <div class="numero-chamado">3</div>
-                    </div>
-
-                    <div class="col-4 justify-content-center text-center text-white config-barra-superior">
-                        <div>Estado</div>
-                        <div class="estado-aberto">Aberto</div>
-                        <div class="estado-fechado">Fechado</div>
-                        <div class="estado-pendente">Pendente</div>
-                    </div>
-
-                    <div class="col-4 justify-content-end text-start text-white config-barra-superior">
-                        <div>Opções</div>
-                        <div class="container-icons">
-                            <a href="detalhes-do-chamado-aberto.html"><i class="fa-solid fa-eye text-dark icone-olho"></i></a>
-                        </div>
-                        
-
-                        <div class="container-icons">
-                            <a href="detalhes-do-chamado-fechado.html"><i class="fa-solid fa-eye text-dark icone-olho"></i></a>
-                            <a href="pedido-de-reabertura.html"><i class="fa-solid fa-lock-open text-dark icone-cadeado-fechado"></i></a>
-                        </div>
- 
-
-                        <div class="container-icons">
-                            <a href="detalhes-do-chamado-pendente.html"><i class="fa-solid fa-eye text-dark icone-olho"></i></a>
-                        </div>
-  
-                    </div>
+        <div class="container">
+            <h1 class="text-center text-white mt-5 mb-5">Meus Chamados</h1>
+            
+            <div class="row mt-5">
+                {% for chamado in chamados %}
+                <div class="col-4 justify-content-start text-center text-white config-barra-superior">
+                    <div>N°</div>
+                    <div class="numero-chamado">{{ chamado.id }}</div>
                 </div>
 
-                <div class="container-botao-voltar">
-                    <div class="icone-voltar">
-                        <a href="chamados.html"><i class="fas fa-arrow-left text-white"></i></a>
-                        <form>
-                            <input class="mt-4 text-white botao-voltar" type="submit" formaction="chamados.html" value="Voltar">
-                        </form>
+                <div class="col-4 justify-content-center text-center text-white config-barra-superior">
+                    <div>Estado</div>
+                    <div class="estado-aberto">{{ chamado.status }}</div>
+                </div>
+
+                <div class="col-4 justify-content-end text-start text-white config-barra-superior">
+                    <div>Opções</div>
+                    <div class="container-icons">
+                        <a href="{% url 'detalhes_do_chamado_aberto' id=chamado.id %}"><i class="fa-solid fa-eye text-dark icone-olho"></i></a>
                     </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="container-botao-voltar">
+                <div class="icone-voltar">
+                    <a href="chamados.html"><i class="fas fa-arrow-left text-white"></i></a>
+                    <form>
+                        <input class="mt-4 text-white botao-voltar" type="submit" formaction="chamados.html" value="Voltar">
+                    </form>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

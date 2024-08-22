@@ -226,5 +226,16 @@ def submit_chamado(request):
 
     return HttpResponse("Método não permitido", status=405)
 
+@login_required
 def meus_chamados(request):
-    return render(request, 'meus-chamados.html')
+    chamados = Chamado.objects.filter(usuario=request.user)  # Filtra os chamados do usuário atual
+    return render(request, 'meus-chamados.html', {'chamados': chamados})
+
+@login_required
+def detalhes_do_chamado_aberto(request, id):
+    chamado = get_object_or_404(Chamado, id=id)
+    context = {
+        'chamado': chamado,
+    }
+    return render(request, 'detalhes-do-chamado-aberto.html', context)
+
