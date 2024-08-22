@@ -9,11 +9,12 @@ a {
     text-decoration: none;
 }
 
-
 /* LOGO */
 .logo {
     font-size: 32px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    color: #FFF;
 }
 
 /* FORMULARIO DE LOGIN */
@@ -27,7 +28,6 @@ a {
 
 .sombra {
     background-color: #FFF;
-    /* border-radius: 8px; */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra com deslocamento horizontal, vertical, desfoque e cor */
 }
 
@@ -37,7 +37,6 @@ a {
 
 .opcao-de-login:hover {
     color: rgba(168, 168, 168, 0.4);
-
 }
 
 .botao-acessar {
@@ -47,7 +46,6 @@ a {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-      
 label {
     font-size: 18px;
 }
@@ -94,10 +92,6 @@ label {
     border-radius: 4px;
 }
 
-
-
-
-
 /*//////////////////// TELA CHAMADOS ////////////////////*/
 .boas-vindas {
     font-size: 20px;
@@ -118,7 +112,6 @@ label {
     color: #555;
 }
 
-
 .opcao-abrir-chamado {
     font-size: 18px;
     font-weight: 500;
@@ -126,11 +119,11 @@ label {
 }
 
 /* Estilo para o ícone de lista */
-.input-icon-lista-ticket{
+.input-icon-lista-ticket {
     position: relative;
     margin-bottom: 0rem;
 }
-    
+
 .input-icon-lista-ticket i {
     position: absolute;
     font-size: 20px;
@@ -139,7 +132,7 @@ label {
     transform: translateY(-50%);
     color: #555;
 }
-    
+
 /* Estilo para o campo de entrada */
 .input-icon-lista input[type="password"] {
     padding-left: 30px; /* Espaço para o ícone */
@@ -148,11 +141,7 @@ label {
     border-radius: 4px;
 }
 
-
-
-
-
-/*//////////////////// TELA ABRIR CHAMADO////////////////////*/
+/*//////////////////// TELA ABRIR CHAMADO ////////////////////*/
 textarea {
     resize: none;
 }
@@ -176,8 +165,7 @@ textarea {
     border: none;
 }
 
-
-.botao-voltar  {
+.botao-voltar {
     font-size: 16px;
     background: none;
     border: none;
@@ -197,7 +185,7 @@ textarea {
     position: relative;
     margin-bottom: 0rem;
 }
-    
+
 .icone-voltar i {
     position: absolute;
     font-size: 25px;
@@ -227,11 +215,7 @@ textarea {
     color: #555;
 }
 
-
-
-
-
-/*//////////////////// TELA CHAMADO ENVIADO////////////////////*/
+/*//////////////////// TELA CHAMADO ENVIADO ////////////////////*/
 
 /* Estiliza a sobreposição */
 .overlay {
@@ -254,7 +238,6 @@ textarea {
     font-size: 30px;
     text-align: left;
     font-family: Arial, Helvetica, sans-serif;
-
 }
 
 .informacoes {
@@ -267,99 +250,143 @@ textarea {
     border: none;
 }
 
-.informacoes div  {
-    margin-top:10px;
+.informacoes div {
+    margin-top: 10px;
 }
 
+/*//////////////////// TELA MEUS CHAMADOS ////////////////////*/
 
-
-
-
-/*//////////////////// TELA MEUS CHAMADOS////////////////////*/
-.config-barra-superior {
-    font-size: 25px;
-    font-family: Arial, Helvetica, sans-serif;
+.container-geral {
+    background-color: #115FBB;
+    padding: 20px;
 }
 
-.numero-chamado {
+.header-row {
+    font-weight: bold;
+    background-color: #333; /* Cor de fundo do cabeçalho */
+    padding: 10px 0;
+    text-align: center;
+}
+
+.header-row div {
+    font-weight: bold;
+}
+
+.numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
     border-radius: 20px;
     font-weight: 600;
     font-size: 20px;
-    margin-top: 20px;
-    color: #000;
+    color: #FFF;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    background: #FFF;
+}
+
+.numero-chamado {
+    color: #000;
     background: #FFF;
 }
 
 .estado-aberto {
-    border-radius: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background: #1D9000;
 }
 
 .estado-fechado {
-    border-radius: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background: #CB0000;
 }
 
 .estado-pendente {
-    border-radius: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background: #C66B00;
+}
+
+.row.mt-2 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.col-4.text-center.text-white {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.header-row .col-4 {
+    padding: 0;
 }
 
 .container-icons {
     display: flex;
-    gap: 15px;
-    align-items: center;
+    justify-content: center; /* Centraliza os ícones horizontalmente */
+    align-items: center; /* Alinha verticalmente os ícones e o texto */
+    gap: 10px; /* Espaço entre os ícones */
 }
 
 .container-icons i {
-    font-size: 20px;
+    font-size: 20px; /* Tamanho dos ícones */
     border-radius: 3px;
     padding: 5px;
-    margin-top: 17.7px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #555; /* Cor dos ícones */
 }
 
 .icone-olho {
     background-color: #fff;
 }
 
-.icone-cadeado-fechado {
-    background-color: #fff;
+/* Ajuste para garantir que o texto e o ícone estejam alinhados */
+.col-4.text-center.text-white div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (min-width: 320px) and (max-width: 767.98px) {
-    .estado-aberto, .estado-fechado, .estado-pendente,
-    .numero-chamado {
+/* Ajustes de responsividade */
+@media (max-width: 767.98px) {
+    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
         font-size: 15px;
     }
 
     .container-icons i {
         font-size: 15px;
-        margin-top: 15.1px;
     }
 }
 
 
+/* Ajustes de responsividade */
+@media (max-width: 767.98px) {
+    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
+        font-size: 15px;
+    }
+
+    .container-icons i {
+        font-size: 15px;
+    }
+}
 
 
+/* Ajusta o tamanho dos ícones e textos em dispositivos menores */
+@media (max-width: 767.98px) {
+    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
+        font-size: 15px;
+    }
 
-/*//////////////////// TELA DETALHES DO CHAMADO  ABERTO ////////////////////*/
+    .container-icons i {
+        font-size: 15px;
+    }
+}
+
+/* Ajuste para garantir que o texto e o ícone estejam alinhados */
+.col-4.text-center.text-white div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*//////////////////// TELA DETALHES DO CHAMADO ABERTO ////////////////////*/
 h1 {
     font-size: 30px;
 }
@@ -368,137 +395,48 @@ hr {
     padding: 2.5px;
 }
 
-/* estilo de informações sobre o chamado */
-.setor, .sala, .equipamento, .data-de-abertura, .status {
-    margin-top: 20px;
-    font-size: 25px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #FFF;
-} 
-
-.status {
-    float: left;
-    margin-right: 10px;
-}
-
-.informacoes .estado-aberto, .informacoes .estado-fechado,
-.informacoes .estado-pendente {
-    font-size: 19px;
-    float: left;
-    padding: 2px 30px;
-    margin-top: 13px;
-    color: #FFF;
-}
-
-.caixa-desc-abertura {
-    margin-top: 5px;
-    margin-bottom: 0;
-}
-
-.texto-aberto-por {
-    font-size: 25px;
-}
-
-.texto-fechado-por {
-    font-size: 25px;
-    margin-top: 50px;
-} 
-
-
-
-
-/*//////////////////// TELA PEDIDO DE REABERTURA////////////////////*/
-.msg-de-confirmacao {
-    font-size: 30px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.botao-sim, .botao-nao {
-    width: 100px;
-    border: none;
-    margin: 10px;
-}
-
-@media (min-width: 320px) and (max-width: 767.98px) {
-    .botao-sim, .botao-nao {
-        width: 100px;
-        border: none;
-        margin: 5px;
-    }
-}
-
-
-
-
-
-/*//////////////////// TELA PEDIDO DE REABERTURA////////////////////*/
-.caixa-de-reabertura {
+/* Estilo de informações sobre o chamado */
+.campo-info {
     font-size: 20px;
-    margin-top: 40px;
-    margin-bottom: 0;
+    font-weight: 500;
 }
 
-.msg-solicitacao-enviada {
-    font-size: 30px;
-    font-family: Arial, Helvetica, sans-serif;
+.tipo-chamado {
+    font-weight: 500;
 }
 
-.msg-aguarde {
-    font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
+.detalhes-titulo {
+    font-weight: 700;
 }
 
-
-
-
-
-/*//////////////////// TELA FECHAR CHAMADO ////////////////////*/
-.botao-enviar-relatorio {
-    border-radius: 30px;
-    border: none;
-    color: #555;
+/* Ajusta a cor do status */
+.abrir {
+    color: #1D9000;
 }
 
-@media (min-width: 700px) {
-    .caixa-tecnico-responsavel {
-        width: 400px;
-    }
+.fechar {
+    color: #CB0000;
 }
 
-
-
-
-
-/*//////////////////// TELA DETALHES DO CHAMADO ADM ////////////////////*/
-.icon-cadeado-aberto, .icon-cadeado-fechado {
-    border-radius: 10px;
-    background-color: #FFF;
-    padding: 5px;
+.pendente {
+    color: #C66B00;
 }
 
-.icon-cadeado-aberto {
-    position: relative;
-    left: 10px;
-    top: 13px;
-    color: #000;
+/* Ajusta o tamanho do ícone */
+.icone-lista {
+    font-size: 25px;
 }
 
-.icon-cadeado-fechado {
-    position: relative;
-    left: 10px;
-    top: 13px;
-    color: #000;
+.container-detalhes {
+    padding: 0 20px;
 }
 
+.container-detalhes h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
 
-.botao-salvar {
-    width: 100px;
-    font-size: 20px;
-    border-radius: 100px;
-    position: absolute;
-    right: 0px;
-    bottom: 30%;
-    transform: translateY(-50%);
-    font-family: Arial, Helvetica, sans-serif;
-    color: #555;
+.container-detalhes .info {
+    margin-bottom: 20px;
 }

@@ -29,32 +29,43 @@
         <div class="container">
             <h1 class="text-center text-white mt-5 mb-5">Meus Chamados</h1>
             
-            <div class="row mt-5">
-                {% for chamado in chamados %}
-                <div class="col-4 justify-content-start text-center text-white config-barra-superior">
+            <div class="row header-row">
+                <div class="col-4 text-center text-white">
                     <div>N°</div>
+                </div>
+                <div class="col-4 text-center text-white">
+                    <div>Estado</div>
+                </div>
+                <div class="col-4 text-center text-white">
+                    <div>Opções</div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                {% for chamado in chamados %}
+                <div class="col-4 text-center text-white">
                     <div class="numero-chamado">{{ chamado.id }}</div>
                 </div>
 
-                <div class="col-4 justify-content-center text-center text-white config-barra-superior">
-                    <div>Estado</div>
+                <div class="col-4 text-center text-white">
                     <div class="estado-aberto">{{ chamado.status }}</div>
                 </div>
 
-                <div class="col-4 justify-content-end text-start text-white config-barra-superior">
-                    <div>Opções</div>
+                <div class="col-4 text-center text-white">
                     <div class="container-icons">
-                        <a href="{% url 'detalhes_do_chamado_aberto' id=chamado.id %}"><i class="fa-solid fa-eye text-dark icone-olho"></i></a>
+                        <a href="{% url 'detalhes_do_chamado_aberto' id=chamado.id %}">
+                            <i class="fa-solid fa-eye text-dark icone-olho"></i>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
 
-            <div class="container-botao-voltar">
+            <div class="container-botao-voltar mt-4">
                 <div class="icone-voltar">
                     <a href="chamados.html"><i class="fas fa-arrow-left text-white"></i></a>
                     <form>
-                        <input class="mt-4 text-white botao-voltar" type="submit" formaction="chamados.html" value="Voltar">
+                        <input class="text-white botao-voltar" type="submit" formaction="chamados.html" value="Voltar">
                     </form>
                 </div>
             </div>
