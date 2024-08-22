@@ -26,7 +26,7 @@
     <div class="container-geral"> <!-- início container geral -->
         <div class="logo text-white">IF CHAMADOS</div>
 
-        <h1 class="text-center text-white mt-5 mb-5">Detalhes do Chamado</h1>
+        <h1 class="text-center text-white mt-5 mb-5">Detalhes do Chamado Fechado</h1>
         
         <div class="container">
             <div class="row">
@@ -49,16 +49,21 @@
                     <label for="area-comentario" class="form-label text-white texto-dropdown caix-desc-abertura">Descr. da abertura:</label>
                     <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.descricao_problema }}</textarea>
                 </div>
+
+                <div class="col-12">
+                    <label for="area-comentario" class="form-label text-white texto-dropdown caix-desc-abertura">Relatório de fechamento:</label>
+                    <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.relato_tecnico }}</textarea>
+                </div>
+
                 <div class="col-12 mt-3">
                     <div class="container-botao-voltar mt-4">
                         <div class="icone-voltar">
                             <a href="{% url 'meus_chamados' %}"><i class="fas fa-arrow-left text-white"></i></a>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- fim container geral -->
+    </div>
 </body>
 </html>

@@ -269,7 +269,6 @@ textarea {
     color: #FFF;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    background: #FFF;
 }
 
 .numero-chamado {
@@ -278,15 +277,21 @@ textarea {
 }
 
 .estado-aberto {
-    background: #1D9000;
+    background-color: #28a745; /* Verde para chamado aberto */
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
 }
 
 .estado-fechado {
-    background: #CB0000;
+    background-color: #dc3545; /* Vermelho para chamado fechado */
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
 }
 
 .estado-pendente {
-    background: #C66B00;
+    background-color: #C66B00; /* Laranja para chamado pendente */
 }
 
 .row.mt-2 {

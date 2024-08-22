@@ -240,3 +240,11 @@ def detalhes_do_chamado_aberto(request, id):
     }
     return render(request, 'detalhes-do-chamado-aberto.html', contexto)
 
+@login_required
+def detalhes_do_chamado_fechado(request, id):
+    chamado = get_object_or_404(Chamado, id=id)
+    contexto = {
+        'chamado': chamado,
+        'usuario_email': request.user.email 
+    }
+    return render(request, 'detalhes-do-chamado-fechado.html', contexto)

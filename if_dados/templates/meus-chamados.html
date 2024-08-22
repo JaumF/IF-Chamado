@@ -23,9 +23,9 @@
 
 </head>
 <body>
-    <div class="container-geral"> <!-- inicio container geral -->
+    <div class="container-geral"> <!-- início container geral -->
         <div class="logo text-white">IF CHAMADOS</div>
-
+    
         <div class="container">
             <h1 class="text-center text-white mt-5 mb-5">Meus Chamados</h1>
             
@@ -40,35 +40,38 @@
                     <div>Opções</div>
                 </div>
             </div>
-
+    
             <div class="row mt-2">
                 {% for chamado in chamados %}
                 <div class="col-4 text-center text-white">
                     <div class="numero-chamado">{{ chamado.id }}</div>
                 </div>
-
+    
                 <div class="col-4 text-center text-white">
-                    <div class="estado-aberto">{{ chamado.status }}</div>
+                    <div class="{% if chamado.status == 'Fechado' %}estado-fechado{% else %}estado-aberto{% endif %}">
+                        {{ chamado.status }}
+                    </div>
                 </div>
-
+    
                 <div class="col-4 text-center text-white">
                     <div class="container-icon">
+                        {% if chamado.status == 'Fechado' %}
+                        <a href="{% url 'detalhes_do_chamado_fechado' id=chamado.id %}">
+                            <i class="fa-solid fa-eye icone-olho"></i>
+                        </a>
+                        {% else %}
                         <a href="{% url 'detalhes_do_chamado_aberto' id=chamado.id %}">
                             <i class="fa-solid fa-eye icone-olho"></i>
                         </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
             </div>
-
-            <div class="container-botao-voltar">
-                    
-            </div>
-
+    
             <div class="container-botao-voltar mt-4">
                 <div class="icone-voltar">
                     <a href="{% url 'chamados' %}"><i class="fas fa-arrow-left text-white"></i></a>
-                    <!-- O form não é necessário se você está apenas voltando -->
                 </div>
             </div>
         </div>
