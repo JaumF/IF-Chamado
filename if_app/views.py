@@ -38,3 +38,6 @@ def chamados_view(request):
 
 def abrir_chamado(request):
     return render(request, 'abrir-chamado.html')
+
+def meus_chamados(request):
+    return render(request, 'meus-chamados.html')

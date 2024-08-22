@@ -225,3 +225,6 @@ def submit_chamado(request):
         return redirect('chamado_enviado', chamado_id=chamado.id)
 
     return HttpResponse("Método não permitido", status=405)
+
+def meus_chamados(request):
+    return render(request, 'meus-chamados.html')

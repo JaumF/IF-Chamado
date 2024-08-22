@@ -20,13 +20,14 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <form method="get" action="#">
+                    <form method="get" action="{% url 'meus_chamados' %}">
                         <div class="form-group input-icon-lista-ticket">
                             <i class="fa-solid fa-table-list"></i>
                             <input class="form-control mt-5 pt-3 pb-3 sombra opcao-meus-chamados" type="submit" name="meus-chamados" id="meus-chamados" value="Meus chamados">
                         </div>
                     </form>
                 </div>
+                
                 <div class="col-md-4">
                     <form method="get" action="{% url 'abrir-chamado' %}">
                         <div class="form-group input-icon-lista-ticket">
