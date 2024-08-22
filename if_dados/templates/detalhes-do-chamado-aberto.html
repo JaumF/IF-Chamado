@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>IF CHAMADOS - Detalhes do chamado</title>
+    <title>IF CHAMADOS - Detalhes do Chamado</title>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
 
 </head>
 <body>
-    <div class="container-geral"> <!-- inicio container geral -->
+    <div class="container-geral"> <!-- início container geral -->
         <div class="logo text-white">IF CHAMADOS</div>
 
         <h1 class="text-center text-white mt-5 mb-5">Detalhes do Chamado</h1>
@@ -43,17 +43,18 @@
 
             <div class="row">
                 <div class="col-12 texto-aberto-por text-white">
-                    Aberto por:
+                    Aberto por: {{ usuario_email }}
                 </div>
                 <div class="col-12">
                     <label for="area-comentario" class="form-label text-white texto-dropdown caix-desc-abertura">Descr. da abertura:</label>
                     <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.descricao_problema }}</textarea>
                 </div>
-                <div class="col-12 icone-voltar mt-3">
-                    <a href="chamados.html"><i class="fas fa-arrow-left text-white"></i></a>
-                    <form class="d-inline">
-                        <input class="mt-4 text-white botao-voltar" type="submit" formaction="meus-chamados.html" value="Voltar">
-                    </form>
+                <div class="col-12 mt-3">
+                    <div class="d-flex justify-content-center">
+                        <form method="get" action="{% url 'meus_chamados' %}">
+                            <input class="btn btn-voltar mt-5 sombra" type="submit" value="Voltar">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

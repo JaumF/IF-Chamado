@@ -1,4 +1,4 @@
-/*//////////////////// TELA LOGIN ////////////////////*/
+/*//////////////////// ESTILOS GERAIS ////////////////////*/
 
 body {
     padding: 10px;
@@ -17,7 +17,7 @@ a {
     color: #FFF;
 }
 
-/* FORMULARIO DE LOGIN */
+/* FORMULÁRIO DE LOGIN */
 .container-formulario-login {
     border: 1px solid red;
 }
@@ -165,54 +165,44 @@ textarea {
     border: none;
 }
 
-.botao-voltar {
+/* Botão "Voltar" */
+.btn-voltar {
     font-size: 16px;
-    background: none;
-    border: none;
+    color: #5C5C5C; /* Cor do texto */
+    background-color: #FFF; /* Cor de fundo */
+    border: 1px solid #5C5C5C; /* Borda cinza */
+    border-radius: 26px; /* Borda arredondada */
+    padding: 0.5rem 1rem; /* Padding interno */
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-.caixa-comentario {
-    margin-top: 40px;
-    margin-bottom: 0;
+.btn-voltar i {
+    margin-right: 0.5rem; /* Espaçamento entre o ícone e o texto */
+    font-size: 18px; /* Tamanho do ícone */
 }
 
-.area-comentario {
-    font-size: 18px;
+.btn-voltar:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+    border-color: #999; /* Cor da borda ao passar o mouse */
 }
 
-/* Estilo para o ícone de voltar */
-.icone-voltar {
-    position: relative;
-    margin-bottom: 0rem;
+.btn-voltar:focus {
+    outline: none; /* Remove o contorno padrão ao focar */
 }
 
-.icone-voltar i {
-    position: absolute;
-    font-size: 25px;
-    top: 70%;
-    transform: translateY(-50%);
-}
+/* Ajustes de responsividade */
+@media (max-width: 767.98px) {
+    .btn-voltar {
+        font-size: 14px;
+        padding: 0.4rem 0.8rem;
+    }
 
-.icone-voltar input[type="submit"] {
-    padding-left: 30px; /* Espaço para o ícone */
-    font-size: 26px;
-    border-radius: 4px;
-}
-
-.container-botao-voltar, .container-botao-enviar {
-    height: 50px;
-    position: relative;
-}
-
-.botao-enviar {
-    width: 100px;
-    border-radius: 100px;
-    position: absolute;
-    right: 0px;
-    bottom: 30%;
-    transform: translateY(-50%);
-    font-family: Arial, Helvetica, sans-serif;
-    color: #555;
+    .btn-voltar i {
+        font-size: 16px;
+    }
 }
 
 /*//////////////////// TELA CHAMADO ENVIADO ////////////////////*/
@@ -356,65 +346,6 @@ textarea {
     }
 }
 
-
-/* Ajustes de responsividade */
-@media (max-width: 767.98px) {
-    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
-        font-size: 15px;
-    }
-
-    .icone-olho {
-        font-size: 40px; /* Ajusta o tamanho do ícone para telas menores */
-    }
-
-    .container-icon {
-        height: 80px; /* Ajusta a altura do contêiner para telas menores */
-        padding: 15px; /* Ajusta o padding do contêiner */
-    }
-}
-
-
-/* Ajustes de responsividade */
-@media (max-width: 767.98px) {
-    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
-        font-size: 15px;
-    }
-
-    .icone-olho {
-        font-size: 30px; /* Ajusta o tamanho do ícone para telas menores */
-    }
-
-    .container-icon {
-        height: 60px; /* Ajusta a altura do contêiner para telas menores */
-    }
-}
-
-
-/* Ajustes de responsividade */
-@media (max-width: 767.98px) {
-    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
-        font-size: 15px;
-    }
-
-    .icone-olho {
-        font-size: 20px;
-    }
-}
-
-
-
-/* Ajustes de responsividade */
-@media (max-width: 767.98px) {
-    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
-        font-size: 15px;
-    }
-
-    .container-icons i {
-        font-size: 15px;
-    }
-}
-
-
 /* Ajusta o tamanho dos ícones e textos em dispositivos menores */
 @media (max-width: 767.98px) {
     .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
@@ -432,7 +363,6 @@ textarea {
     justify-content: center;
     align-items: center;
 }
-
 
 /*//////////////////// TELA DETALHES DO CHAMADO ABERTO ////////////////////*/
 h1 {

@@ -234,8 +234,9 @@ def meus_chamados(request):
 @login_required
 def detalhes_do_chamado_aberto(request, id):
     chamado = get_object_or_404(Chamado, id=id)
-    context = {
+    contexto = {
         'chamado': chamado,
+        'usuario_email': request.user.email 
     }
-    return render(request, 'detalhes-do-chamado-aberto.html', context)
+    return render(request, 'detalhes-do-chamado-aberto.html', contexto)
 
