@@ -50,10 +50,11 @@
                     <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.descricao_problema }}</textarea>
                 </div>
                 <div class="col-12 mt-3">
-                    <div class="d-flex justify-content-center">
-                        <form method="get" action="{% url 'meus_chamados' %}">
-                            <input class="btn btn-voltar mt-5 sombra" type="submit" value="Voltar">
-                        </form>
+                    <div class="container-botao-voltar mt-4">
+                        <div class="icone-voltar">
+                            <a href="{% url 'meus_chamados' %}"><i class="fas fa-arrow-left text-white"></i></a>
+                            <!-- O form não é necessário se você está apenas voltando -->
+                        </div>
                     </div>
                 </div>
             </div>

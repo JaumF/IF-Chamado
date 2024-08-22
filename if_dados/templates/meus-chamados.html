@@ -61,12 +61,14 @@
                 {% endfor %}
             </div>
 
+            <div class="container-botao-voltar">
+                    
+            </div>
+
             <div class="container-botao-voltar mt-4">
                 <div class="icone-voltar">
-                    <a href="chamados.html"><i class="fas fa-arrow-left text-white"></i></a>
-                    <form>
-                        <input class="text-white botao-voltar" type="submit" formaction="chamados.html" value="Voltar">
-                    </form>
+                    <a href="{% url 'chamados' %}"><i class="fas fa-arrow-left text-white"></i></a>
+                    <!-- O form não é necessário se você está apenas voltando -->
                 </div>
             </div>
         </div>
