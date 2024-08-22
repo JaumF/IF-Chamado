@@ -307,6 +307,7 @@ textarea {
 
 .col-4.text-center.text-white {
     display: flex;
+    flex-direction: column; /* Ajusta a direção do layout para colunas */
     justify-content: center;
     align-items: center;
     padding: 10px 0;
@@ -316,31 +317,27 @@ textarea {
     padding: 0;
 }
 
-.container-icons {
+.container-icon {
     display: flex;
-    justify-content: center; /* Centraliza os ícones horizontalmente */
-    align-items: center; /* Alinha verticalmente os ícones e o texto */
-    gap: 10px; /* Espaço entre os ícones */
-}
-
-.container-icons i {
-    font-size: 20px; /* Tamanho dos ícones */
-    border-radius: 3px;
-    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: #555; /* Cor dos ícones */
+    background: #FFF;
+    padding: 20px; /* Aumenta o padding para dar mais espaço ao ícone */
+    height: 100px; /* Aumenta a altura do contêiner */
+    margin-top: 10px; /* Espaço extra acima do ícone */
 }
 
 .icone-olho {
-    background-color: #fff;
+    font-size: 50px; /* Aumenta o tamanho do ícone */
+    color: #555;
+    margin-top: 5px; /* Ajusta o posicionamento vertical do ícone */
 }
 
-/* Ajuste para garantir que o texto e o ícone estejam alinhados */
-.col-4.text-center.text-white div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container-icon a {
+    color: inherit; /* Garante que o ícone herde a cor do contêiner */
+    text-decoration: none; /* Remove o sublinhado do link */
 }
 
 /* Ajustes de responsividade */
@@ -349,10 +346,61 @@ textarea {
         font-size: 15px;
     }
 
-    .container-icons i {
-        font-size: 15px;
+    .icone-olho {
+        font-size: 40px; /* Ajusta o tamanho do ícone para telas menores */
+    }
+
+    .container-icon {
+        height: 80px; /* Ajusta a altura do contêiner para telas menores */
+        padding: 15px; /* Ajusta o padding do contêiner */
     }
 }
+
+
+/* Ajustes de responsividade */
+@media (max-width: 767.98px) {
+    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
+        font-size: 15px;
+    }
+
+    .icone-olho {
+        font-size: 40px; /* Ajusta o tamanho do ícone para telas menores */
+    }
+
+    .container-icon {
+        height: 80px; /* Ajusta a altura do contêiner para telas menores */
+        padding: 15px; /* Ajusta o padding do contêiner */
+    }
+}
+
+
+/* Ajustes de responsividade */
+@media (max-width: 767.98px) {
+    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
+        font-size: 15px;
+    }
+
+    .icone-olho {
+        font-size: 30px; /* Ajusta o tamanho do ícone para telas menores */
+    }
+
+    .container-icon {
+        height: 60px; /* Ajusta a altura do contêiner para telas menores */
+    }
+}
+
+
+/* Ajustes de responsividade */
+@media (max-width: 767.98px) {
+    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
+        font-size: 15px;
+    }
+
+    .icone-olho {
+        font-size: 20px;
+    }
+}
+
 
 
 /* Ajustes de responsividade */
