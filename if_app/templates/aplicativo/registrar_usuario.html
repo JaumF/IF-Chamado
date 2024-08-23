@@ -1,3 +1,5 @@
+{% load form_tags %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,27 +51,31 @@
             {% csrf_token %}
             <div class="form-group">
                 {{ form.email.label_tag }}
-                {{ form.email }}
+                {{ form.email|add_class:"form-control" }}
             </div>
             <div class="form-group">
                 {{ form.nome.label_tag }}
-                {{ form.nome }}
+                {{ form.nome|add_class:"form-control" }}
             </div>
             <div class="form-group">
                 {{ form.numero_celular.label_tag }}
-                {{ form.numero_celular }}
+                {{ form.numero_celular|add_class:"form-control" }}
             </div>
             <div class="form-group">
                 {{ form.identificacao.label_tag }}
-                {{ form.identificacao }}
+                {{ form.identificacao|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                {{ form.departamento.label_tag }}
+                {{ form.departamento|add_class:"form-control" }}
             </div>
             <div class="form-group">
                 {{ form.password.label_tag }}
-                {{ form.password }}
+                {{ form.password|add_class:"form-control" }}
             </div>
             <div class="form-group">
                 {{ form.password_confirm.label_tag }}
-                {{ form.password_confirm }}
+                {{ form.password_confirm|add_class:"form-control" }}
             </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>

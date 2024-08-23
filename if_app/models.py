@@ -41,6 +41,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     nome = models.CharField(max_length=100)
     numero_celular = models.CharField(max_length=11)
     identificacao = models.CharField(max_length=50, choices=[('Funcionario', 'Funcionario'), ('Professor', 'Professor'), ('Aluno', 'Aluno')])
+    departamento = models.CharField(max_length=50, choices=[('Laboratório', 'Laboratório'), ('Caen', 'Caen'), ('Pavilhão Novo', 'Pavilhão Novo'), ('Pavilhão Velho', 'Pavilhão Velho')], default='Laboratório')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
