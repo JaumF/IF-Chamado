@@ -2,9 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
-
-# Remova o modelo Equipamento
-
 # Define the Especialidade model
 class Especialidade(models.Model):
     nome = models.CharField(max_length=100)
@@ -37,12 +34,12 @@ class Chamado(models.Model):
     sala = models.CharField(max_length=255)
     descricao_problema = models.TextField()
     patrimonio = models.CharField(max_length=50, blank=True, null=True)
-    data_abertura = models.DateField(default=timezone.now)
-    data_fechamento = models.DateField(blank=True, null=True)
-    data_modificacao = models.DateField(blank=True, null=True)
-    data_reabertura = models.DateField(blank=True, null=True)
-    equipamento = models.CharField(max_length=255, blank=True, null=True)  # Novo campo
-    especialidade = models.ManyToManyField('Especialidade', blank=True)
+    data_abertura = models.DateTimeField(default=timezone.now)
+    data_fechamento = models.DateTimeField(blank=True, null=True)
+    data_modificacao = models.DateTimeField(blank=True, null=True)
+    data_reabertura = models.DateTimeField(blank=True, null=True)
+    equipamento = models.CharField(max_length=255, blank=True, null=True)
+    especialidade = models.ManyToManyField(Especialidade, blank=True)
     relato_tecnico = models.TextField(blank=True)
 
     def marcar_como_concluido(self):
@@ -57,10 +54,10 @@ class Chamado(models.Model):
 # Define the HistoricoChamado model
 class HistoricoChamado(models.Model):
     chamado = models.ForeignKey(Chamado, on_delete=models.CASCADE)
-    data_fechamento = models.DateField()
-    status = models.CharField(max_length=10)
+    data_fechamento = models.DateTimeField(null=True, blank=True)
+    status = models.CharField(max_length=50, choices=Chamado.Status.choices)
     relatorio = models.TextField(blank=True)
-    tecnico = models.ForeignKey(Tecnico, on_delete=models.SET_NULL, null=True)
+    tecnico = models.ForeignKey(Tecnico, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return f"Histórico do Chamado {self.chamado.id} - {self.data_fechamento}"
+        return f"Histórico do Chamado {self.chamado.id} - {self.status}"

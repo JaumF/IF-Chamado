@@ -15,7 +15,17 @@
 
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    
+    <div class="form-group">
+      {{ form.tecnico.label_tag }}
+      {{ form.tecnico }}
+    </div>
+    
+    <div class="form-group">
+      {{ form.relato_tecnico.label_tag }}
+      {{ form.relato_tecnico }}
+    </div>
+    
     {% if chamado.status == 'Fechado' %}
       <button type="submit" formaction="{% url 'admin:fechar_chamado' chamado.id %}">Fechar Chamado</button>
     {% elif chamado.status == 'Reaberto' %}

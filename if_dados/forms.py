@@ -1,49 +1,74 @@
 from django import forms
-from django_select2.forms import Select2MultipleWidget, Select2Widget
-from .models import Chamado, Especialidade
+from .models import Chamado, Especialidade, Tecnico
 
+# Formulário para Especialidade
+class EspecialidadeForm(forms.ModelForm):
+    class Meta:
+        model = Especialidade
+        fields = '__all__'
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+# Formulário para Técnico
+class TecnicoForm(forms.ModelForm):
+    class Meta:
+        model = Tecnico
+        fields = '__all__'
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'telefone': forms.TextInput(attrs={'class': 'form-control'}),
+            'especialidades': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        }
+
+# Formulário para abrir Chamado
 class ChamadoForm(forms.ModelForm):
     class Meta:
         model = Chamado
-        fields = ['status', 'departamento', 'sala', 'descricao_problema', 'patrimonio', 'data_abertura', 'data_fechamento', 'data_modificacao', 'data_reabertura', 'especialidade', 'relato_tecnico']
+        fields = [
+            'departamento', 'sala', 'descricao_problema',
+            'patrimonio', 'equipamento', 'especialidade'
+        ]
         widgets = {
-            'descricao_problema': forms.Textarea(attrs={'rows': 5}),
-            'data_abertura': forms.DateInput(attrs={'type': 'date'}),
-            'data_fechamento': forms.DateInput(attrs={'type': 'date'}),
-            'data_modificacao': forms.DateInput(attrs={'type': 'date'}),
-            'data_reabertura': forms.DateInput(attrs={'type': 'date'}),
+            'departamento': forms.TextInput(attrs={'class': 'form-control'}),
+            'sala': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao_problema': forms.Textarea(attrs={'class': 'form-control'}),
+            'patrimonio': forms.TextInput(attrs={'class': 'form-control'}),
+            'equipamento': forms.TextInput(attrs={'class': 'form-control'}),
+            'especialidade': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['especialidade'].widget = forms.CheckboxSelectMultiple()
-        self.fields['especialidade'].queryset = Especialidade.objects.all()
-
+# Formulário para alterar Chamado
 class ChamadoAlterarForm(forms.ModelForm):
     class Meta:
         model = Chamado
         fields = [
-            'departamento', 
-            'sala', 
-            'descricao_problema', 
-            'patrimonio', 
+            'status', 'departamento', 'sala', 'descricao_problema',
+            'patrimonio', 'equipamento', 'especialidade'
         ]
         widgets = {
-            'data_abertura': forms.HiddenInput(),
-            'data_fechamento': forms.HiddenInput(),
-            'data_modificacao': forms.HiddenInput(),
-            'data_reabertura': forms.HiddenInput(),
-            'especialidade': Select2Widget(attrs={'style': 'width: 300px;'}),  # Ajuste a largura aqui
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'departamento': forms.TextInput(attrs={'class': 'form-control'}),
+            'sala': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao_problema': forms.Textarea(attrs={'class': 'form-control'}),
+            'patrimonio': forms.TextInput(attrs={'class': 'form-control'}),
+            'equipamento': forms.TextInput(attrs={'class': 'form-control'}),
+            'especialidade': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         }
 
-class FecharChamadoForm(forms.Form):
-    relato_tecnico = forms.CharField(widget=forms.Textarea, required=True)
+# Formulário para Fechar Chamado
+class FecharChamadoForm(forms.ModelForm):
+    tecnico = forms.ModelChoiceField(
+        queryset=Tecnico.objects.all(),
+        label='Técnico',
+        required=True,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
-    def clean(self):
-        cleaned_data = super().clean()
-        relato_tecnico = cleaned_data.get("relato_tecnico")
-
-        if not relato_tecnico:
-            raise forms.ValidationError("O relatório técnico é obrigatório para fechar o chamado.")
-
-        return cleaned_data
+    class Meta:
+        model = Chamado
+        fields = ['relato_tecnico', 'tecnico']
+        widgets = {
+            'relato_tecnico': forms.Textarea(attrs={'class': 'form-control'}),
+        }

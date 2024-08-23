@@ -4,7 +4,6 @@ from django import forms
 from django.contrib import admin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.html import format_html
-from django_select2.forms import Select2MultipleWidget
 from .models import Chamado, Especialidade, Tecnico, HistoricoChamado
 from .forms import ChamadoForm, FecharChamadoForm
 
@@ -71,7 +70,8 @@ class ChamadoAdmin(admin.ModelAdmin):
                     chamado=chamado,
                     data_fechamento=chamado.data_fechamento,
                     status=Chamado.Status.FECHADO,
-                    relatorio=chamado.relato_tecnico
+                    relatorio=chamado.relato_tecnico,
+                    tecnico=form.cleaned_data.get('tecnico')  # Passa o técnico do formulário
                 )
 
                 self.message_user(request, 'Chamado fechado com sucesso!')
@@ -102,7 +102,6 @@ class ChamadoAdmin(admin.ModelAdmin):
             self.message_user(request, 'Chamado reaberto com sucesso!')
             return redirect('admin:if_dados_chamado_changelist')
         else:
-            # Aqui não há formulário específico para reabrir chamado
             pass
 
         context = {
@@ -149,3 +148,9 @@ class HistoricoChamadoAdmin(admin.ModelAdmin):
     list_display = ('id', 'chamado', 'data_fechamento', 'status', 'tecnico')
     list_filter = ('status', 'data_fechamento', 'tecnico')
     search_fields = ('chamado__id', 'tecnico__nome', 'status')
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = [field.name for field in self.model._meta.fields]
+        if 'relatorio_tecnico' in readonly_fields:
+            readonly_fields.remove('relatorio_tecnico')
+        return readonly_fields

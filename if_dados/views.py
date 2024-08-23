@@ -1,3 +1,5 @@
+from typing import Self
+from urllib import request
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
@@ -71,30 +73,29 @@ def atualizar_chamado(request, id):
 @login_required
 def fechar_chamado_view(request, chamado_id):
     chamado = get_object_or_404(Chamado, id=chamado_id)
-    tecnico = get_object_or_404(Tecnico, user=request.user)
-
-    if chamado.tecnico != tecnico:
-        messages.error(request, 'Você não tem permissão para fechar este chamado.')
-        return redirect('detalhes_do_chamado', id=chamado_id)
-
+    
     if request.method == 'POST':
         form = FecharChamadoForm(request.POST)
         if form.is_valid():
             chamado.status = Chamado.Status.FECHADO
             chamado.data_fechamento = timezone.now()
-            chamado.relato_tecnico = form.cleaned_data['relato_tecnico']
-            chamado.save()
+            chamado.relato_tecnico = form.cleaned_data.get('relato_tecnico', '')
 
+            tecnico = form.cleaned_data.get('tecnico')  # Obtém o técnico selecionado
+
+            # Criar um registro no histórico de chamados
             HistoricoChamado.objects.create(
                 chamado=chamado,
                 data_fechamento=chamado.data_fechamento,
                 status=Chamado.Status.FECHADO,
                 relatorio=chamado.relato_tecnico,
-                tecnico=tecnico
+                tecnico=tecnico  # Passa o técnico selecionado
             )
 
+            chamado.save()
+
             messages.success(request, 'Chamado fechado com sucesso!')
-            return redirect('detalhes_do_chamado', id=chamado_id)
+            return redirect('admin:if_dados_chamado_changelist')
     else:
         form = FecharChamadoForm()
 
@@ -102,7 +103,7 @@ def fechar_chamado_view(request, chamado_id):
         'form': form,
         'chamado': chamado,
     }
-    return render(request, 'fechar_chamado.html', context)
+    return render(request, 'admin/fechar_chamado.html', context)
 
 @login_required
 def listar_chamados_disponiveis(request):
