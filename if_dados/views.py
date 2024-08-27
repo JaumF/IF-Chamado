@@ -204,27 +204,31 @@ def chamado_enviado(request, chamado_id):
 @login_required
 def submit_chamado(request):
     if request.method == 'POST':
-        departamento = request.POST.get('departamento')
+        # Obtém os dados do formulário
         sala = request.POST.get('sala')
         equipamento = request.POST.get('equipamento')
         descricao_problema = request.POST.get('descricao_problema')
         patrimonio = request.POST.get('patrimonio')
 
-        # Crie uma nova instância do modelo Chamado
+        # Obtém o departamento do usuário logado
+        departamento = request.user.departamento
+
+        # Cria uma nova instância do modelo Chamado
         chamado = Chamado(
-            departamento=departamento,
+            usuario=request.user,  # Atribui o usuário logado
+            departamento=departamento,  # Usa o departamento do usuário
             sala=sala,
             equipamento=equipamento,
             descricao_problema=descricao_problema,
             patrimonio=patrimonio,
-            data_abertura=timezone.now(),
-            usuario=request.user  # Atribui o usuário logado no site
+            data_abertura=timezone.now()
         )
         chamado.save()
 
-        # Redirecionar para a página 'chamado_enviado' com o ID do chamado
+        # Redireciona para a página 'chamado_enviado' com o ID do chamado
         return redirect('chamado_enviado', chamado_id=chamado.id)
 
+    # Retorna um erro se o método não for POST
     return HttpResponse("Método não permitido", status=405)
 
 @login_required

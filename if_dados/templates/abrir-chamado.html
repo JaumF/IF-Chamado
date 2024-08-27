@@ -18,8 +18,11 @@
             <form method="post" action="{% url 'submit-chamado' %}">
                 {% csrf_token %} <!-- Adiciona o token CSRF ao formulário -->
                 
+                <!-- Campo oculto para o departamento -->
+                <input type="hidden" name="departamento" value="{{ user.departamento }}">
+
                 <div class="text-white mt-4 texto-dropdown">Departamento</div>
-                <input name="departamento" class="input-equipamento sombra" type="text" placeholder="Ex: Localização." required>
+                <input class="input-equipamento sombra" type="text" value="{{ user.departamento }}" disabled>
 
                 <div class="text-white mt-4 texto-dropdown">Sala</div>
                 <input name="sala" class="input-equipamento sombra" type="text" placeholder="Ex: Núm. da Sala." required>
@@ -44,8 +47,6 @@
                 <div class="icone-voltar">
                     <a href="{% url 'chamados' %}"><i class="fas fa-arrow-left text-white"></i></a>
                 </div>
-
-
 
                 <div class="container-botao-enviar">
                     <input class="btn btn-light mt-4 mb text-center botao-enviar sombra" type="submit" value="Enviar">
