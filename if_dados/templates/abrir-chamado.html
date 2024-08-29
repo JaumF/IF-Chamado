@@ -9,6 +9,52 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://kit.fontawesome.com/7f423aaa39.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var departamentoInput = document.querySelector('input[name="departamento"]');
+            var salaSelect = document.getElementById('sala');
+
+            function updateSalaOptions(departamento) {
+                let options = [];
+
+                if (departamento === 'Laboratório') {
+                    options = [
+                        { value: 'sem-opcao', text: '' },
+                        { value: 'laboratorio1', text: 'Laboratório 1' },
+                        { value: 'laboratorio2', text: 'Laboratório 2' }
+                    ];
+                } else if (departamento === 'Pavilhão Novo') {
+                    options = [
+                        { value: 'sem-opcao', text: '' },
+                        { value: 'sala1', text: 'Sala 1' },
+                        { value: 'sala2', text: 'Sala 2' }
+                    ];
+                } else {
+                    options = [
+                        { value: 'sem-opcao', text: '' }
+                    ];
+                }
+
+                // Clear existing options
+                salaSelect.innerHTML = '';
+                // Add new options
+                options.forEach(function(option) {
+                    var opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.textContent = option.text;
+                    salaSelect.appendChild(opt);
+                });
+            }
+
+            // Update options on page load
+            updateSalaOptions(departamentoInput.value);
+
+            // Update options when departamento changes
+            departamentoInput.addEventListener('change', function() {
+                updateSalaOptions(this.value);
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container-geral-abrir-chamado">
@@ -17,7 +63,7 @@
         <div class="container">
             <form method="post" action="{% url 'submit-chamado' %}">
                 {% csrf_token %} <!-- Adiciona o token CSRF ao formulário -->
-                
+
                 <!-- Campo oculto para o departamento -->
                 <input type="hidden" name="departamento" value="{{ user.departamento }}">
 
@@ -25,7 +71,9 @@
                 <input class="input-equipamento sombra" type="text" value="{{ user.departamento }}" disabled>
 
                 <div class="text-white mt-4 texto-dropdown">Sala</div>
-                <input name="sala" class="input-equipamento sombra" type="text" placeholder="Ex: Núm. da Sala." required>
+                <select class="estilo-dropdowns sombra text-center" id="sala" name="sala">
+                    <!-- Options will be dynamically added by JavaScript -->
+                </select>
 
                 <div class="text-white mt-4 texto-dropdown">Equipamento</div>
                 <input name="equipamento" class="input-equipamento sombra" type="text" placeholder="Ex: Objeto com problema." required>
@@ -41,7 +89,6 @@
                 <hr>
 
                 <div class="container-botao-voltar">
-                    
                 </div>
 
                 <div class="icone-voltar">
