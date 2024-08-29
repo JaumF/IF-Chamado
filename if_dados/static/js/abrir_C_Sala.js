@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function() {
         } else if (departamento === 'Pavilhão Novo') {
             options = [
                 { value: 'sem-opcao', text: '' },
-                { value: 'sala1', text: 'Sala 1' },
-                { value: 'sala2', text: 'Sala 2' }
+                { value: 'Sala 1', text: 'Sala 1' },
+                { value: 'Sala 2', text: 'Sala 2' }
             ];
         } else {
             options = [
