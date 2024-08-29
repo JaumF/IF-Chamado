@@ -16,7 +16,7 @@
 
         <div class="container">
             <form method="post" action="{% url 'submit-chamado' %}">
-                {% csrf_token %} <!-- Adiciona o token CSRF ao formulário -->
+                {% csrf_token %}
 
                 <!-- Campo oculto para o departamento -->
                 <input type="hidden" name="departamento" value="{{ user.departamento }}">
@@ -29,8 +29,8 @@
                     <!-- As opções serão adicionadas dinamicamente pelo JavaScript -->
                 </select>
 
-                <div class="text-white mt-4 texto-dropdown">Equipamento</div>
-                <input name="equipamento" class="input-equipamento sombra" type="text" placeholder="Ex: Objeto com problema." required>
+                <!-- Inclusão do template de Equipamento -->
+                {% include 'equipamento.html' %}
 
                 <div>
                     <label for="descricao_problema" class="form-label text-white texto-dropdown caixa-comentario">Descr. do problema:</label>
