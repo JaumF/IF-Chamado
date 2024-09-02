@@ -50,15 +50,29 @@
                     <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.descricao_problema }}</textarea>
                 </div>
 
+                <hr class="text-white mt-5 mb-5">
+
                 <div class="col-12">
                     <label for="area-comentario" class="form-label text-white texto-dropdown caix-desc-abertura">Relatório de fechamento:</label>
                     <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.relato_tecnico }}</textarea>
                 </div>
 
                 <div class="col-12 mt-3">
-                    <div class="container-botao-voltar mt-4">
-                        <div class="icone-voltar">
-                            <a href="{% url 'meus_chamados' %}"><i class="fas fa-arrow-left text-white"></i></a>
+                    <div class="row">
+                        <!-- Botão Voltar -->
+                        <div class="col-md-6 text-start">
+                            <div class="container-botao-voltar mt-4">
+                                <div class="icone-voltar">
+                                    <a href="{% url 'meus_chamados' %}"><i class="fas fa-arrow-left text-white"></i> Voltar</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botão Reabrir Chamado -->
+                        <div class="col-md-6 text-end">
+                            <div class="container-botao-reabrir mt-4">
+                                <a href="#" class="btn btn-primary">Reabrir Chamado</a>
+                            </div>
                         </div>
                     </div>
                 </div>
