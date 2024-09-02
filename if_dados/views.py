@@ -233,7 +233,7 @@ def submit_chamado(request):
 
 @login_required
 def meus_chamados(request):
-    chamados = Chamado.objects.filter(usuario=request.user)  # Filtra os chamados do usuário atual
+    chamados = Chamado.objects.filter(usuario=request.user).order_by('-data_abertura')
     return render(request, 'meus-chamados.html', {'chamados': chamados})
 
 @login_required

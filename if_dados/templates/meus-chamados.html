@@ -30,32 +30,38 @@
             <h1 class="text-center text-white mt-5 mb-5">Meus Chamados</h1>
             
             <div class="row mt-5 header-row">
-                <div class="col-4 text-center text-white">
+                <div class="col-3 text-center text-white">
                     <div>N°</div>
                 </div>
-                <div class="col-4 text-center text-white">
+                <div class="col-3 text-center text-white">
                     <div>Estado</div>
                 </div>
-                
-                <div class="col-4 text-center text-white">
+                <div class="col-3 text-center text-white">
+                    <div>Data</div>
+                </div>
+                <div class="col-3 text-center text-white">
                     <div>Opções</div>
                 </div>
             </div>
     
             <div class="row mt-2">
                 {% for chamado in chamados %}
-                <div class="col-4 text-center text-white">
+                <div class="col-3 text-center text-white">
                     <div class="numero-chamado">{{ chamado.id }}</div>
                 </div>
     
-                <div class="col-4 text-center text-white">
+                <div class="col-3 text-center text-white">
                     <div class="{% if chamado.status == 'Fechado' %}estado-fechado{% else %}estado-aberto{% endif %}">
                         {{ chamado.status }}
                     </div>
                 </div>
     
-                <div class="col-4 text-center text-white">
-                    <div class="container-icon">
+                <div class="col-3 text-center text-white">
+                    <div class="numero-chamado">{{ chamado.data_abertura|date:"d/m/Y" }}</div>
+                </div>
+                
+                <div class="col-3 text-center text-white">
+                    <div class="numero-chamado">
                         {% if chamado.status == 'Fechado' %}
                         <a href="{% url 'detalhes_do_chamado_fechado' id=chamado.id %}">
                             <i class="fa-solid fa-eye icone-olho"></i>
@@ -71,7 +77,6 @@
             </div>
             
             <hr>
-
 
             <div class="container-botao-voltar mt-4">
                 <div class="icone-voltar">
