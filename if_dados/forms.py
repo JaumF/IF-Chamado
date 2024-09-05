@@ -72,3 +72,12 @@ class FecharChamadoForm(forms.ModelForm):
         widgets = {
             'relato_tecnico': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+# Formulário para Reabrir Chamado
+class ReabrirChamadoForm(forms.ModelForm):
+    class Meta:
+        model = Chamado
+        fields = ['descricao_problema']
+        widgets = {
+            'descricao_problema': forms.Textarea(attrs={'class': 'form-control'}),
+        }

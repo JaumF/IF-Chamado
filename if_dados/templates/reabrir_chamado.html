@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>IF CHAMADOS - Reabrir Chamado</title>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7f423aaa39.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container-geral"> <!-- início container geral -->
+        <div class="logo text-white">IF CHAMADOS</div>
+
+        <h1 class="text-center text-white mt-5 mb-5">Reabertura do Chamado</h1>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-12 informacoes">
+                    <div class="setor">Departamento: {{ chamado.departamento }}</div>
+                    <div class="sala">Sala: {{ chamado.sala }}</div>
+                    <div class="equipamento">Equipamento: {{ chamado.equipamento }}</div>
+                    <div class="data-de-abertura">Data de abertura: {{ chamado.data_abertura|date:"d/m/Y" }}</div>
+                    <div class="status">Status: {{ chamado.status }}</div>
+                </div>
+            </div>
+
+            <hr class="text-white mt-5 mb-5">
+
+            <form method="post" action="{% url 'reabrir_chamado' chamado.id %}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12">
+                        <label for="descricao_reabertura" class="form-label text-white">Descrição da Reabertura:</label>
+                        <textarea id="descricao_reabertura" name="descricao_reabertura" class="form-control" rows="5" required></textarea>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <a href="{% url 'detalhes_do_chamado_fechado' chamado.id %}" class="btn btn-primary">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> <!-- fim container geral -->
+</body>
+</html>

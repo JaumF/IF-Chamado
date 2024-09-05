@@ -50,6 +50,19 @@
                     <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.descricao_problema }}</textarea>
                 </div>
 
+                {% if chamado.status == "FECHADO" %}
+                <div class="col-12 mt-3">
+                    <div class="row">
+                        <!-- Botão Reabrir Chamado -->
+                        <div class="col-md-6 text-end">
+                            <div class="container-botao-reabrir mt-4">
+                                <a href="{% url 'reabrir_chamado' chamado.id %}" class="btn btn-warning">Reabrir Chamado</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
                 <div class="col-12 mt-3">
                     <div class="container-botao-voltar mt-4">
                         <div class="icone-voltar">

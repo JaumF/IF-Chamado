@@ -8,4 +8,7 @@ urlpatterns = [
     path('meus-chamados/', views.meus_chamados, name='meus_chamados'),
     path('chamado/<int:id>/detalhes/', views.detalhes_do_chamado_aberto, name='detalhes_do_chamado_aberto'),
     path('chamado/<int:id>/detalhes-fechado/', views.detalhes_do_chamado_fechado, name='detalhes_do_chamado_fechado'),
+    path('reabrir_chamado/<int:pk>/', views.reabrir_chamado, name='reabrir_chamado'),
+    path('chamado_reaberto/<int:chamado_id>/', views.chamado_reaberto, name='chamado_reaberto'),
 ]
+

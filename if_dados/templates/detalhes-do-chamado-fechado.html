@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>IF CHAMADOS - Detalhes do Chamado</title>
+    <title>IF CHAMADOS - Detalhes do Chamado Fechado</title>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,7 +71,8 @@
                         <!-- Botão Reabrir Chamado -->
                         <div class="col-md-6 text-end">
                             <div class="container-botao-reabrir mt-4">
-                                <a href="#" class="btn btn-primary">Reabrir Chamado</a>
+                                <!-- Redireciona para a view de reabertura do chamado -->
+                                <a href="{% url 'reabrir_chamado' chamado.id %}" class="btn btn-primary">Reabrir Chamado</a>
                             </div>
                         </div>
                     </div>
