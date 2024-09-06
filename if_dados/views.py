@@ -144,14 +144,11 @@ def assumir_chamado(request, chamado_id):
 # View para reabrir o chamado
 @login_required
 def reabrir_chamado(request, pk):
-    chamado = get_object_or_404(Chamado, id=pk)
-
+    chamado = get_object_or_404(Chamado, pk=pk)
     if request.method == 'POST':
-        chamado.status = 'Aberto'
-        chamado.save()
-        # Redireciona para a página de confirmação
-        return redirect('chamado_reaberto', chamado_id=chamado.id)
-
+        chamado.reabrir()
+        messages.success(request, 'Chamado reaberto com sucesso!')
+        return redirect('meus_chamados')
     return render(request, 'reabrir_chamado.html', {'chamado': chamado})
 
 

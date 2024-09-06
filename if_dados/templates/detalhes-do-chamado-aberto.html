@@ -35,7 +35,10 @@
                     <div class="sala">Sala: {{ chamado.sala }}</div>
                     <div class="equipamento">Equipamento: {{ chamado.equipamento }}</div>
                     <div class="data-de-abertura">Data de abertura: {{ chamado.data_abertura|date:"d/m/Y" }}</div>
-                    <div class="status">Status: {{ chamado.status }}</div>
+                    {% if chamado.data_reabertura %}
+                    <div class="data-reabertura">Data de reabertura: {{ chamado.data_reabertura|date:"d/m/Y" }}</div>
+                    {% endif %}
+                    <div class="status {% if chamado.status == 'REABERTO' %}status-reaberto{% else %}status{% endif %}">Status: {{ chamado.status }}</div>
                 </div>
             </div>
 
@@ -46,7 +49,7 @@
                     Aberto por: {{ usuario_email }}
                 </div>
                 <div class="col-12">
-                    <label for="area-comentario" class="form-label text-white texto-dropdown caix-desc-abertura">Descr. da abertura:</label>
+                    <label id="descricao-label" for="area-comentario" class="form-label text-white texto-dropdown caix-desc-abertura">Descr. da abertura:</label>
                     <textarea id="area-comentario" class="form-control area-comentario custom-placeholder sombra" rows="5" readonly>{{ chamado.descricao_problema }}</textarea>
                 </div>
 
@@ -73,5 +76,19 @@
             </div>
         </div>
     </div> <!-- fim container geral -->
+
+    <!-- JavaScript para alterar o nome da descrição -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var status = "{{ chamado.status }}";
+            var descricaoLabel = document.getElementById('descricao-label');
+
+            if (status === 'REABERTO') {
+                descricaoLabel.textContent = 'Descr. da reabertura:';
+            } else {
+                descricaoLabel.textContent = 'Descr. da abertura:';
+            }
+        });
+    </script>
 </body>
 </html>

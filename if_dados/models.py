@@ -47,6 +47,13 @@ class Chamado(models.Model):
         self.data_fechamento = timezone.now()
         self.save()
 
+
+    def reabrir(self):
+        self.status = self.Status.REABERTO
+        self.data_reabertura = timezone.now()
+        self.save()
+
+
     def __str__(self):
         user_email = getattr(self.usuario, 'email', 'Email desconhecido')
         return f"Chamado {self.id} - {self.departamento} - {user_email}"

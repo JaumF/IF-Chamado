@@ -316,110 +316,73 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background: #FFF;
-    padding: 20px; /* Aumenta o padding para dar mais espaço ao ícone */
-    height: 100px; /* Aumenta a altura do contêiner */
-    margin-top: 10px; /* Espaço extra acima do ícone */
 }
 
-.icone-olho {
-    font-size: 50px; /* Aumenta o tamanho do ícone */
-    color: #555;
-    margin-top: 5px; /* Ajusta o posicionamento vertical do ícone */
+/* Estilos para a seção de detalhes do chamado */
+.detalhes-chamado {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.container-icon a {
-    color: inherit; /* Garante que o ícone herde a cor do contêiner */
-    text-decoration: none; /* Remove o sublinhado do link */
+/* Estilos para a data de reabertura */
+.data-reabertura {
+    font-size: 18px;
+    color: #ddd; /* Cor de texto para data de reabertura */
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif; /* Mantém a mesma fonte que a data de abertura */
 }
 
-/* Ajustes de responsividade */
-@media (max-width: 767.98px) {
-    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
-        font-size: 15px;
-    }
-
-    .icone-olho {
-        font-size: 40px; /* Ajusta o tamanho do ícone para telas menores */
-    }
-
-    .container-icon {
-        height: 80px; /* Ajusta a altura do contêiner para telas menores */
-        padding: 15px; /* Ajusta o padding do contêiner */
-    }
+/* Estilos para a data de abertura */
+.data-de-abertura {
+    font-size: 18px;
+    color: #ddd; /* Cor de texto para data de abertura */
+    font-family: Arial, Helvetica, sans-serif; /* Mantém a mesma fonte que a data de reabertura */
 }
 
-/* Ajusta o tamanho dos ícones e textos em dispositivos menores */
-@media (max-width: 767.98px) {
-    .numero-chamado, .estado-aberto, .estado-fechado, .estado-pendente {
-        font-size: 15px;
-    }
-
-    .container-icons i {
-        font-size: 15px;
-    }
+/* Estilos para o status "Reaberto" */
+.status-reaberto {
+    background-color: #007bff; /* Azul para status reaberto */
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
 }
 
-/* Ajuste para garantir que o texto e o ícone estejam alinhados */
-.col-4.text-center.text-white div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Estilos para o status padrão */
+.status {
+    background-color: #6c757d; /* Cinza para status padrão */
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
 }
 
-/*//////////////////// TELA DETALHES DO CHAMADO ABERTO ////////////////////*/
-h1 {
-    font-size: 30px;
+/* Botão "Reabrir Chamado" */
+.container-botao-reabrir a.btn-warning {
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-hr {
-    padding: 2.5px;
+.container-botao-reabrir a.btn-warning:hover {
+    background-color: #e0a800;
 }
 
-/* Estilo de informações sobre o chamado */
-.campo-info {
-    font-size: 20px;
-    font-weight: 500;
+/* Botão "Voltar" */
+.icone-voltar {
+    text-align: center;
 }
 
-.tipo-chamado {
-    font-weight: 500;
-}
-
-.detalhes-titulo {
-    font-weight: 700;
-}
-
-/* Ajusta a cor do status */
-.abrir {
-    color: #1D9000;
-}
-
-.fechar {
-    color: #CB0000;
-}
-
-.pendente {
-    color: #C66B00;
-}
-
-/* Ajusta o tamanho do ícone */
-.icone-lista {
-    font-size: 25px;
-}
-
-.container-detalhes {
-    padding: 0 20px;
-}
-
-.container-detalhes h2 {
+.icone-voltar a {
+    color: #FFF;
     font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
+    transition: color 0.3s;
 }
 
-.container-detalhes .info {
-    margin-bottom: 20px;
+.icone-voltar a:hover {
+    color: #e0a800;
 }
