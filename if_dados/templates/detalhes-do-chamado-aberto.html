@@ -34,9 +34,10 @@
                     <div class="setor">Departamento: {{ chamado.departamento }}</div>
                     <div class="sala">Sala: {{ chamado.sala }}</div>
                     <div class="equipamento">Equipamento: {{ chamado.equipamento }}</div>
+                    <div class="equipamento">Patrimônio: {{ chamado.patrimonio }}</div>
                     <div class="data-de-abertura">Data de abertura: {{ chamado.data_abertura|date:"d/m/Y" }}</div>
                     {% if chamado.data_reabertura %}
-                    <div class="data-reabertura">Data de reabertura: {{ chamado.data_reabertura|date:"d/m/Y" }}</div>
+                    <div class="data-de-abertura">Data de reabertura: {{ chamado.data_reabertura|date:"d/m/Y" }}</div>
                     {% endif %}
                     <div class="status {% if chamado.status == 'REABERTO' %}status-reaberto{% else %}status{% endif %}">Status: {{ chamado.status }}</div>
                 </div>
